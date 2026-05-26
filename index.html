@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meu Currículo | GitHub Pages</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --navy: #0a192f;
+      --teal: #64ffda;
+      --slate: #8892b0;
+      --light-slate: #a8b2d8;
+      --lightest-slate: #ccd6f6;
+      --white: #e6f1ff;
+      --card-bg: #112240;
+      --card-border: #1e3a5f;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--navy);
+      color: var(--slate);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+    /* ── SIDEBAR ── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 320px; height: 100vh;
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--card-border);
+      z-index: 10;
+      background: var(--navy);
+    }
+
+    .avatar-wrapper {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      border: 3px solid var(--teal);
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 0 30px rgba(100,255,218,0.2);
+    }
+
+    .avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+    .avatar-placeholder {
+      width: 100%; height: 100%;
+      background: var(--card-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; color: var(--teal);
+    }
+
+    #sidebar h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    #sidebar .role {
+      font-size: 0.85rem;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    #sidebar p.bio {
+      font-size: 0.88rem;
+      color: var(--light-slate);
+      margin-bottom: 32px;
+    }
+
+    /* NAV */
+    .side-nav { list-style: none; padding: 0; margin: 0 0 40px; }
+    .side-nav li { margin-bottom: 12px; }
+    .side-nav a {
+      color: var(--slate);
+      text-decoration: none;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      display: flex; align-items: center; gap: 10px;
+      transition: color 0.2s, padding-left 0.2s;
+    }
+    .side-nav a .line {
+      display: inline-block; width: 30px; height: 1px;
+      background: var(--slate); transition: width 0.2s, background 0.2s;
+    }
+    .side-nav a:hover, .side-nav a.active { color: var(--white); }
+    .side-nav a:hover .line, .side-nav a.active .line { width: 60px; background: var(--teal); }
+
+    /* SOCIAL */
+    .social-links { display: flex; gap: 18px; }
+    .social-links a {
+      color: var(--slate); font-size: 1.3rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .social-links a:hover { color: var(--teal); transform: translateY(-3px); }
+
+    /* ── MAIN ── */
+    #main {
+      margin-left: 320px;
+      padding: 60px 80px 120px;
+      max-width: 900px;
+    }
+
+    /* SECTION */
+    section { margin-bottom: 100px; scroll-margin-top: 60px; }
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--lightest-slate);
+      margin-bottom: 36px;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px; height: 3px;
+      background: var(--teal);
+      margin-top: 14px;
+    }
+
+    /* ── ABOUT ── */
+    #about .about-text p { font-size: 1rem; color: var(--light-slate); margin-bottom: 16px; }
+    #about .about-text p span { color: var(--teal); }
+
+    /* ── EXPERIENCE ── */
+    .exp-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .exp-card::before {
+      content: '';
+      position: absolute; left: 0; top: 0;
+      width: 3px; height: 100%;
+      background: transparent;
+      transition: background 0.3s;
+    }
+    .exp-card:hover { border-color: var(--teal); transform: translateX(5px); box-shadow: -4px 0 20px rgba(100,255,218,0.08); }
+    .exp-card:hover::before { background: var(--teal); }
+
+    .exp-date {
+      font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--slate);
+      margin-bottom: 6px;
+    }
+    .exp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; color: var(--white); margin-bottom: 4px;
+    }
+    .exp-company { font-size: 0.85rem; color: var(--teal); margin-bottom: 14px; }
+    .exp-desc { font-size: 0.9rem; color: var(--light-slate); }
+
+    /* TAGS */
+    .tag {
+      display: inline-block;
+      background: rgba(100,255,218,0.08);
+      color: var(--teal);
+      border: 1px solid rgba(100,255,218,0.25);
+      border-radius: 4px;
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      margin: 6px 4px 0 0;
+      letter-spacing: 1px;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      border-left: 2px solid var(--card-border);
+      padding-left: 24px;
+      margin-bottom: 32px;
+      position: relative;
+    }
+    .edu-card::before {
+      content: '';
+      position: absolute; left: -7px; top: 4px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 2px solid var(--teal);
+    }
+    .edu-year { font-size: 0.75rem; color: var(--slate); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+    .edu-course { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 2px; }
+    .edu-institution { font-size: 0.88rem; color: var(--teal); }
+    .edu-desc { font-size: 0.88rem; color: var(--light-slate); margin-top: 8px; }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .skill-group {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 22px;
+      transition: border-color 0.3s;
+    }
+    .skill-group:hover { border-color: var(--teal); }
+    .skill-group h6 {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px;
+      color: var(--teal); margin-bottom: 14px;
+    }
+    .skill-bar-wrap { margin-bottom: 10px; }
+    .skill-name {
+      display: flex; justify-content: space-between;
+      font-size: 0.82rem; color: var(--light-slate); margin-bottom: 5px;
+    }
+    .skill-bar {
+      height: 4px; background: var(--card-border); border-radius: 2px; overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%; background: var(--teal); border-radius: 2px;
+      width: 0;
+      transition: width 1s ease;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .proj-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 28px;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .proj-card:hover { border-color: var(--teal); transform: translateY(-5px); }
+    .proj-icon { font-size: 2rem; color: var(--teal); margin-bottom: 16px; }
+    .proj-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--white); margin-bottom: 10px; }
+    .proj-desc { font-size: 0.87rem; color: var(--light-slate); flex: 1; }
+    .proj-links { margin-top: 16px; display: flex; gap: 16px; }
+    .proj-links a { font-size: 1.1rem; color: var(--slate); transition: color 0.2s; }
+    .proj-links a:hover { color: var(--teal); }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+    }
+    .contact-box p { color: var(--light-slate); max-width: 460px; margin: 0 auto 28px; }
+    .btn-teal {
+      background: transparent;
+      color: var(--teal);
+      border: 1px solid var(--teal);
+      border-radius: 4px;
+      padding: 14px 36px;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-teal:hover { background: rgba(100,255,218,0.1); color: var(--teal); }
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-top: 36px;
+    }
+    .contact-item {
+      background: var(--navy);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .contact-item i { font-size: 1.5rem; color: var(--teal); margin-bottom: 8px; display: block; }
+    .contact-item span { font-size: 0.82rem; color: var(--light-slate); display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-left: 320px;
+      padding: 20px 80px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--slate);
+      border-top: 1px solid var(--card-border);
+    }
+    footer span { color: var(--teal); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #sidebar {
+        position: static; width: 100%; height: auto;
+        padding: 40px 28px; border-right: none;
+        border-bottom: 1px solid var(--card-border);
+      }
+      #main { margin-left: 0; padding: 40px 28px 80px; }
+      footer { margin-left: 0; padding: 20px 28px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .side-nav { display: flex; flex-wrap: wrap; gap: 10px; }
+      .side-nav a .line { display: none; }
+    }
+
+    /* ── FADE IN ANIMATION ── */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════ SIDEBAR ════════════════════ -->
+<aside id="sidebar">
+  <div>
+    <div class="avatar-wrapper">
+      <!-- Troque por sua foto: <img src="foto.jpg" alt="Sua foto"> -->
+      <div class="avatar-placeholder">
+        <i class="bi bi-person-fill"></i>
+      </div>
+    </div>
+
+    <!-- ⚠️ SUBSTITUA COM SEUS DADOS ⚠️ -->
+    <h1>Seu Nome<br>Completo</h1>
+    <p class="role">Desenvolvedor Web</p>
+    <p class="bio">Estudante de [Seu Curso] apaixonado por tecnologia, design e soluções digitais criativas.</p>
+
+    <nav>
+      <ul class="side-nav">
+        <li><a href="#sobre" class="active"><span class="line"></span>Sobre</a></li>
+        <li><a href="#experiencia"><span class="line"></span>Experiência</a></li>
+        <li><a href="#formacao"><span class="line"></span>Formação</a></li>
+        <li><a href="#habilidades"><span class="line"></span>Habilidades</a></li>
+        <li><a href="#projetos"><span class="line"></span>Projetos</a></li>
+        <li><a href="#contato"><span class="line"></span>Contato</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="social-links">
+    <!-- Substitua # pelos seus links reais -->
+    <a href="https://github.com/seu-usuario" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+    <a href="https://linkedin.com/in/seu-perfil" target="_blank" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:seu@email.com" title="E-mail"><i class="bi bi-envelope-fill"></i></a>
+    <a href="https://instagram.com/seu-perfil" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
+  </div>
+</aside>
+
+<!-- ════════════════════ MAIN ════════════════════ -->
+<main id="main">
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <p class="section-label">Olá, mundo!</p>
+    <h2 class="section-title">Sobre Mim</h2>
+    <div class="about-text fade-in">
+      <!-- ⚠️ EDITE ESTE TEXTO COM SUA HISTÓRIA ⚠️ -->
+      <p>
+        Sou estudante de <span>[Seu Curso]</span> na <span>[Nome da Instituição]</span>, com foco em desenvolvimento web
+        e tecnologias modernas. Tenho interesse especial em criar interfaces que combinam
+        funcionalidade e estética.
+      </p>
+      <p>
+        Quando não estou codando, gosto de <span>[seus hobbies]</span>. Acredito que boas soluções
+        nascem da curiosidade e do aprendizado contínuo.
+      </p>
+      <p>
+        Atualmente buscando <span>oportunidades de estágio</span> onde possa contribuir e crescer
+        profissionalmente na área de tecnologia.
+      </p>
+    </div>
+  </section>
+
+  <!-- EXPERIÊNCIA -->
+  <section id="experiencia">
+    <p class="section-label">O que já fiz</p>
+    <h2 class="section-title">Experiência</h2>
+
+    <!-- ⚠️ REPITA E EDITE OS CARDS ABAIXO ⚠️ -->
+    <div class="exp-card fade-in">
+      <p class="exp-date">Jan 2024 – Present</p>
+      <h3 class="exp-title">Estagiário de Desenvolvimento</h3>
+      <p class="exp-company">Nome da Empresa · São Paulo, SP</p>
+      <p class="exp-desc">
+        Descreva suas responsabilidades e conquistas. Ex.: Desenvolvi features front-end
+        utilizando React e TypeScript, reduzindo o tempo de carregamento em 30%.
+      </p>
+      <div class="mt-2">
+        <span class="tag">React</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Git</span>
+      </div>
+    </div>
+
+    <div class="exp-card fade-in">
+      <p class="exp-date">Mar 2023 – Dez 2023</p>
+      <h3 class="exp-title">Monitor de Laboratório</h3>
+      <p class="exp-company">Nome da Faculdade · [Cidade]</p>
+      <p class="exp-desc">
+        Auxiliei professores e colegas nas disciplinas de programação, criando
+        materiais de apoio e conduzindo sessões de tutoria individuais.
+      </p>
+      <div class="mt-2">
+        <span class="tag">Python</span>
+        <span class="tag">Didática</span>
+        <span class="tag">Suporte técnico</span>
+      </div>
+    </div>
+
+    <div class="exp-card fade-in">
+      <p class="exp-date">2022</p>
+      <h3 class="exp-title">Freelancer – Sites e Landing Pages</h3>
+      <p class="exp-company">Autônomo · Remoto</p>
+      <p class="exp-desc">
+        Desenvolvi páginas web para pequenos negócios locais usando HTML, CSS e
+        Bootstrap, entregando projetos dentro do prazo e do orçamento.
+      </p>
+      <div class="mt-2">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">Bootstrap</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMAÇÃO -->
+  <section id="formacao">
+    <p class="section-label">Onde aprendi</p>
+    <h2 class="section-title">Formação</h2>
+
+    <!-- ⚠️ EDITE COM SUA FORMAÇÃO ⚠️ -->
+    <div class="edu-card fade-in">
+      <p class="edu-year">2023 – Cursando</p>
+      <h3 class="edu-course">[Nome do Seu Curso]</h3>
+      <p class="edu-institution">[Nome da Instituição de Ensino]</p>
+      <p class="edu-desc">
+        Curso com foco em [descreva brevemente o curso]. Participação em projetos
+        de iniciação científica e grupos de estudo em desenvolvimento web.
+      </p>
+    </div>
+
+    <div class="edu-card fade-in">
+      <p class="edu-year">2024</p>
+      <h3 class="edu-course">Curso de [Nome do Curso Extra]</h3>
+      <p class="edu-institution">[Plataforma / Instituição] · Certificado</p>
+      <p class="edu-desc">Carga horária: XX horas. Conteúdo: [descreva brevemente].</p>
+    </div>
+
+    <div class="edu-card fade-in">
+      <p class="edu-year">2023</p>
+      <h3 class="edu-course">Inglês – Avançado (C1)</h3>
+      <p class="edu-institution">[Escola de Idiomas]</p>
+      <p class="edu-desc">Comunicação profissional e técnica em inglês.</p>
+    </div>
+  </section>
+
+  <!-- HABILIDADES -->
+  <section id="habilidades">
+    <p class="section-label">Meu toolkit</p>
+    <h2 class="section-title">Habilidades</h2>
+    <div class="skills-grid">
+
+      <!-- ⚠️ EDITE AS HABILIDADES E PORCENTAGENS ⚠️ -->
+      <div class="skill-group fade-in">
+        <h6><i class="bi bi-code-slash me-2"></i>Front-end</h6>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>HTML / CSS</span><span>90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>JavaScript</span><span>75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>Bootstrap</span><span>85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>React</span><span>60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group fade-in">
+        <h6><i class="bi bi-server me-2"></i>Back-end & BD</h6>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>Python</span><span>80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>MySQL</span><span>70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>Node.js</span><span>55%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="55"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group fade-in">
+        <h6><i class="bi bi-tools me-2"></i>Ferramentas</h6>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>Git / GitHub</span><span>85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>VS Code</span><span>90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>Figma</span><span>65%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group fade-in">
+        <h6><i class="bi bi-person-check me-2"></i>Soft Skills</h6>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>Comunicação</span><span>90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>Trabalho em equipe</span><span>95%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-name"><span>Resolução de problemas</span><span>85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJETOS -->
+  <section id="projetos">
+    <p class="section-label">O que construí</p>
+    <h2 class="section-title">Projetos</h2>
+    <div class="projects-grid">
+
+      <!-- ⚠️ EDITE COM SEUS PROJETOS E LINKS DO GITHUB ⚠️ -->
+      <div class="proj-card fade-in">
+        <div>
+          <div class="proj-icon"><i class="bi bi-cart3"></i></div>
+          <h3 class="proj-title">E-commerce Fictício</h3>
+          <p class="proj-desc">
+            Loja virtual desenvolvida com HTML, CSS e JavaScript puro.
+            Inclui carrinho de compras, filtros de produto e design responsivo.
+          </p>
+          <div class="mt-2">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/seu-usuario/projeto1" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+          <a href="#" target="_blank" title="Demo ao vivo"><i class="bi bi-box-arrow-up-right"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card fade-in">
+        <div>
+          <div class="proj-icon"><i class="bi bi-bar-chart-line"></i></div>
+          <h3 class="proj-title">Dashboard de Dados</h3>
+          <p class="proj-desc">
+            Painel analítico com gráficos interativos gerados a partir de CSV.
+            Desenvolvido com Python e Dash.
+          </p>
+          <div class="mt-2">
+            <span class="tag">Python</span>
+            <span class="tag">Dash</span>
+            <span class="tag">Pandas</span>
+          </div>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/seu-usuario/projeto2" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+          <a href="#" target="_blank" title="Demo ao vivo"><i class="bi bi-box-arrow-up-right"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card fade-in">
+        <div>
+          <div class="proj-icon"><i class="bi bi-phone"></i></div>
+          <h3 class="proj-title">App To-Do List</h3>
+          <p class="proj-desc">
+            Aplicação de lista de tarefas com React, localStorage e sistema
+            de categorias e prioridades.
+          </p>
+          <div class="mt-2">
+            <span class="tag">React</span>
+            <span class="tag">CSS Modules</span>
+          </div>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/seu-usuario/projeto3" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+          <a href="#" target="_blank" title="Demo ao vivo"><i class="bi bi-box-arrow-up-right"></i></a>
+        </div>
+      </div>
+
+      <div class="proj-card fade-in">
+        <div>
+          <div class="proj-icon"><i class="bi bi-globe2"></i></div>
+          <h3 class="proj-title">Portfólio Pessoal</h3>
+          <p class="proj-desc">
+            Este mesmo site! Desenvolvido com Bootstrap 5, publicado no
+            GitHub Pages como atividade acadêmica.
+          </p>
+          <div class="mt-2">
+            <span class="tag">HTML</span>
+            <span class="tag">Bootstrap</span>
+            <span class="tag">GitHub Pages</span>
+          </div>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/seu-usuario/seu-usuario.github.io" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+          <a href="#" target="_blank" title="Este site"><i class="bi bi-box-arrow-up-right"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <p class="section-label">Vamos conversar</p>
+    <h2 class="section-title">Contato</h2>
+    <div class="contact-box fade-in">
+      <p>
+        Estou aberto a novas oportunidades, colaborações e bate-papos sobre
+        tecnologia. Pode me chamar a qualquer hora!
+      </p>
+      <!-- ⚠️ SUBSTITUA pelo seu e-mail real ⚠️ -->
+      <a href="mailto:seu@email.com" class="btn-teal">Enviar e-mail</a>
+
+      <div class="contact-grid mt-4">
+        <div class="contact-item">
+          <i class="bi bi-envelope-fill"></i>
+          <span>seu@email.com</span>
+        </div>
+        <div class="contact-item">
+          <i class="bi bi-telephone-fill"></i>
+          <span>(XX) 9XXXX-XXXX</span>
+        </div>
+        <div class="contact-item">
+          <i class="bi bi-geo-alt-fill"></i>
+          <span>São Paulo, SP — Brasil</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  Desenvolvido com <span>♥</span> por <span>Seu Nome</span> ·
+  Feito com <span>Bootstrap 5</span> · Hospedado no <span>GitHub Pages</span>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // ── Intersection Observer: fade-in ──
+  const faders = document.querySelectorAll('.fade-in');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  faders.forEach(el => obs.observe(el));
+
+  // ── Skill bars animate on scroll ──
+  const barObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(fill => {
+          fill.style.width = fill.dataset.width + '%';
+        });
+        barObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skill-group').forEach(g => barObs.observe(g));
+
+  // ── Active nav link on scroll ──
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.side-nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+
+  // ── Smooth scroll ──
+  navLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
